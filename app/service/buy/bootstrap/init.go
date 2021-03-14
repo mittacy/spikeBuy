@@ -1,6 +1,7 @@
 package bootstrap
 
 import (
+	"buy/app/cron"
 	"buy/app/model"
 	"fmt"
 	"buy/config"
@@ -20,5 +21,7 @@ func Init() {
 	model.InitLocalGoodsStock()
 	// 5. 初始化Kafka
 	database.InitKafka()
+	// 6. 服务注册
+	cron.InitNacos()
 	fmt.Println("初始化工作完成")
 }

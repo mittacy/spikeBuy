@@ -1,6 +1,7 @@
 package main
 
 import (
+	"buy/app/cron"
 	"buy/bootstrap"
 	"buy/database"
 	"buy/logger"
@@ -13,7 +14,10 @@ import (
 func main() {
 	// 1. 初始化工作
 	bootstrap.Init()
-	defer database.CloseKafka()
+	defer func() {
+		database.CloseKafka()
+		cron.DeregisterInstance()
+	}()
 	// 2. 启动API服务
 	if !viper.IsSet("server") {
 		logger.Panic("缺失服务器配置[server]")

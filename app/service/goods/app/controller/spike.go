@@ -7,6 +7,7 @@ import (
 	"goods/common"
 	"goods/database"
 	"goods/logger"
+	"time"
 )
 
 /**
@@ -57,7 +58,7 @@ func CreateSpike(c *gin.Context) {
 	// 2. 添加到Redis有序集合
 	k := viper.GetString("redis.cacheSet")
 	advance := viper.GetInt64("redis.cacheAdvanceTime")
-	cacheTime := goods.StartTime-advance*1000000000
+	cacheTime := goods.StartTime-advance*int64(time.Second)
 	_, err = database.RedisDB.Do("zadd", k, cacheTime, goods.Id)
 	if err != nil {
 		msg = "加入Redis有序集合错误"
