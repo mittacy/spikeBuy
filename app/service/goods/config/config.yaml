@@ -1,0 +1,41 @@
+server:
+  version: v1
+  port: 9000
+  read-timeout: 10                # 读取等待时间，单位: 秒
+  write-timeout: 20               # 写等待时间，单位: 秒
+log:
+  info:
+    file: ./logs/info/info.log    # warn、debug、info日志文件存放目录
+    max-size: 10                  # 文件大小限制,单位MB
+    max-backups: 10               # 最大保留日志文件数量
+    max-age: 30                   # 日志文件保留天数
+    compress: true                # 是否压缩处理
+  err:
+    file: ./logs/err/err.log      # 日志文件存放目录
+    max-size: 10                  # 文件大小限制,单位MB
+    max-backups: 5                # 最大保留日志文件数量
+    max-age: 30                   # 日志文件保留天数
+    compress: true                # 是否压缩处理
+mysql:
+  enabled: true                   # 是否开启mysql
+  host: 127.0.0.1
+  database: spike
+  port: 3306
+  user: root
+  password: password
+  config: charset=utf8mb4&parseTime=True&loc=Local
+  conn-max-idle-time: 10          # 连接等待时间，单位:秒
+  conn-max-life-time: 60          # 设置了连接可复用的最大时间
+  max-idle-conns: 10              # 设置连接池中空闲连接的最大数量
+  max-open-conns: 100             # 设置打开数据库连接的最大数量
+redis:
+  enabled: true                   # 是否开启redis
+  network: tcp
+  host: 127.0.0.1
+  port: 6379
+  cacheAdvanceTime: 60            # 提前多久缓存秒杀商品库存到Redis和抢购服务，单位:秒
+  cacheSet: spikeCacheTime        # 缓存开始时间有序集合
+core:
+  origin: '*'                       # 允许跨域域名，允许所有填: *
+  methods: POST, DELETE, PUT, GET, OPTIONS
+

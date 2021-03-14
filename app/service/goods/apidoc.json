@@ -1,0 +1,7 @@
+{
+  "name": "Web APIs",
+  "version": "1.0.0",
+  "description": "goods API文档",
+  "title": "goods API",
+  "url" : "http://localhost:9000/api/v1"
+}
