@@ -10,10 +10,9 @@ import (
 )
 
 /**
- * @api {post} /sms_goods 添加秒杀活动
+ * @api {post} /spike 添加秒杀活动
  * @apiVersion 1.0.0
- * @apiName CreateSmsGoods
- * @apiGroup SmsGoods
+ * @apiName CreateSpike
  *
  * @apiParam {Number} goods_id 商品id
  * @apiParam {Number} price 商品价格
@@ -39,9 +38,9 @@ import (
  * }
  *
  */
-// CreateSmsGoods 创建秒杀活动接口
-func CreateSmsGoods(c *gin.Context) {
-	var goods model.SmsGoods
+// CreateSpike 创建秒杀活动
+func CreateSpike(c *gin.Context) {
+	var goods model.Spike
 	msg := "成功"
 	if err := c.ShouldBindJSON(&goods); err != nil {
 		msg = "解析请求数据错误"
@@ -52,7 +51,7 @@ func CreateSmsGoods(c *gin.Context) {
 	// 1. 添加到Mysql
 	err := database.MysqlDB.Create(&goods).Error
 	if err != nil {
-		logger.ErrorDetail("创建sms_goods错误", err)
+		logger.ErrorDetail("创建sms_spike错误", err)
 		return
 	}
 	// 2. 添加到Redis有序集合

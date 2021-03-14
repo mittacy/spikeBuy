@@ -1,9 +1,9 @@
 package router
 
 import (
+	"buy/app/controller"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
-	"goods/app/controller"
 )
 
 func InitApiRouter() *gin.Engine {
@@ -11,7 +11,6 @@ func InitApiRouter() *gin.Engine {
 
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
-	//r.Use(middleware.CorsMiddleware())
 
 	gin.SetMode("debug")
 
@@ -19,7 +18,8 @@ func InitApiRouter() *gin.Engine {
 	// 初始化控制器
 	api := r.Group(relativePath)
 	{
-		api.POST("/spike", controller.CreateSpike)
+		api.POST("/spike/buy", controller.Buy)
+		api.POST("/spike/cache", controller.CacheSpike)
 	}
 
 	return r

@@ -1,7 +1,7 @@
 define({ "api": [
   {
     "type": "post",
-    "url": "/sms_goods",
+    "url": "/sms_spike",
     "title": "添加秒杀活动",
     "version": "1.0.0",
     "name": "CreateSmsGoods",
@@ -63,7 +63,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "app/controller/sms_goods.go",
+    "filename": "app/controller/sms_spike.go",
     "groupTitle": "SmsGoods"
   }
 ] });
