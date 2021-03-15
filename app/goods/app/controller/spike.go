@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"goods/app/model"
@@ -9,6 +10,8 @@ import (
 	"goods/logger"
 	"time"
 )
+
+const timeLayout = "2006-01-02 15:04:05"
 
 /**
  * @api {post} /spike 添加秒杀活动
@@ -58,7 +61,7 @@ func CreateSpike(c *gin.Context) {
 	// 2. 添加到Redis有序集合
 	k := viper.GetString("redis.cacheSet")
 	advance := viper.GetInt64("redis.cacheAdvanceTime")
-	cacheTime := goods.StartTime-advance*int64(time.Second)
+	cacheTime := goods.StartTime - advance * int64(time.Second)
 	_, err = database.RedisDB.Do("zadd", k, cacheTime, goods.Id)
 	if err != nil {
 		msg = "加入Redis有序集合错误"
@@ -66,5 +69,7 @@ func CreateSpike(c *gin.Context) {
 		common.Failed(c, -1, msg, nil)
 		return
 	}
+	logger.Info(fmt.Sprintf("添加商品成功, 活动开始时间: %s, 缓存库存时间: %s",
+		time.Unix(goods.StartTime, 0).Format(timeLayout), time.Unix(cacheTime, 0).Format(timeLayout)))
 	common.Success(c, 1, msg, nil)
 }

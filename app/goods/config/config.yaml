@@ -38,4 +38,14 @@ redis:
 core:
   origin: '*'                       # 允许跨域域名，允许所有填: *
   methods: POST, DELETE, PUT, GET, OPTIONS
+discovery:
+  server:
+    ip: 116.62.111.168  # nacos ip
+    port: 8848
+  instance:
+    name: spikeBuy
+    cluster-name: spike-buy
+    group-name: spike-buy-group
+    panic-count: 2    # 运行挂机数，如果超过这个数，可能导致少卖，设置太大会造成redis压力大
+    cache-api: /api/v1/spike/cache  # 缓存库存api地址
 

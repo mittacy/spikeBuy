@@ -2,9 +2,11 @@ package bootstrap
 
 import (
 	"fmt"
+	"goods/app/cron"
 	"goods/config"
 	"goods/database"
 	"goods/logger"
+	"time"
 )
 
 func Init() {
@@ -16,5 +18,9 @@ func Init() {
 	// 3. 初始化数据库连接 mysql、redis
 	database.InitMysql()
 	database.InitRedis()
-	fmt.Println("初始化工作完成")
+	// 4. 监听Redis有序集合,处理分发库存
+	database.InitNacos()
+	time.Sleep(time.Second)
+	cron.InitCacheStock()
+	logger.Info("初始化工作完成")
 }
