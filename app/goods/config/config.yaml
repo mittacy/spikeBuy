@@ -40,7 +40,7 @@ core:
   methods: POST, DELETE, PUT, GET, OPTIONS
 discovery:
   server:
-    ip: 116.62.111.168  # nacos ip
+    ip: 127.0.0.1  # nacos ip
     port: 8848
   instance:
     name: spikeBuy
@@ -48,4 +48,7 @@ discovery:
     group-name: spike-buy-group
     panic-count: 2    # 运行挂机数，如果超过这个数，可能导致少卖，设置太大会造成redis压力大
     cache-api: /api/v1/spike/cache  # 缓存库存api地址
-
+kafka:
+  brokers: "192.168.1.26:9092 192.168.1.26:9093"
+order:
+  thread: 1    # 处理订单线程数

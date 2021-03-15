@@ -2,6 +2,7 @@ package bootstrap
 
 import (
 	"fmt"
+	"github.com/spf13/viper"
 	"goods/app/cron"
 	"goods/config"
 	"goods/database"
@@ -20,7 +21,14 @@ func Init() {
 	database.InitRedis()
 	// 4. 监听Redis有序集合,处理分发库存
 	database.InitNacos()
+
 	time.Sleep(time.Second)
-	cron.InitCacheStock()
+	// 6. 启动后台监听、处理线程
+	groupId := "mysql-spike-buy"
+	n := viper.GetInt("order.thread")
+	for i := 0; i < n; i++ {
+		go cron.StartOrderConsumer(groupId)
+	}
+	go cron.InitCacheStock()
 	logger.Info("初始化工作完成")
 }

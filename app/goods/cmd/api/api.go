@@ -12,6 +12,9 @@ import (
 func main() {
 	// 1. 初始化工作
 	bootstrap.Init()
+	defer func() {
+
+	}()
 	// 2. 启动API服务
 	if !viper.IsSet("server") {
 		logger.Panic("缺失服务器配置[server]")
