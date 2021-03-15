@@ -23,5 +23,5 @@ func Init() {
 	database.InitKafka()
 	// 6. 服务注册
 	cron.InitNacos()
-	fmt.Println("初始化工作完成")
+	logger.Info("初始化工作完成")
 }

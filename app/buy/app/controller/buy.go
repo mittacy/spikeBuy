@@ -5,6 +5,7 @@ import (
 	"buy/common"
 	"buy/database"
 	"buy/logger"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"time"
 )
@@ -44,6 +45,7 @@ func Buy(c *gin.Context) {
 		return
 	}
 
+	msgPre := fmt.Sprintf("用户Id: %d, 购买活动Id: %d", b.UserId, b.SpikeId)
 	/*
 	 * 1. 检查时间是否处于 startTime ~ endTime
 	 * 2. 减本地库存
@@ -59,6 +61,7 @@ func Buy(c *gin.Context) {
 	// 2. 减本地库存
 	stock := model.LocalStockMap[b.SpikeId]
 	if stock == nil || !stock.DeductionStock() {
+		logger.Info(fmt.Sprintf(msgPre + ", result: 失败, reason: 本地库存不足"))
 		common.Success(c, -1, "库存不足", nil)
 		return
 	}
@@ -72,6 +75,7 @@ func Buy(c *gin.Context) {
 	}
 	if reply == nil {
 		common.Success(c, -1, "库存不足", nil)
+		logger.Info(fmt.Sprintf(msgPre + ", result: 失败, reason: redis库存不足"))
 		return
 	}
 
@@ -87,6 +91,7 @@ func Buy(c *gin.Context) {
 	}
 
 	common.Success(c, 1, "success", nil)
+	logger.Info(fmt.Sprintf(msgPre + ", result: 成功"))
 }
 
 /**
@@ -137,5 +142,6 @@ func CacheSpike(c *gin.Context) {
 	// 2. 加入local Info Map
 	model.LocalSpikeMap[spike.Id] = &spike
 
+	logger.Info(fmt.Sprintf("新的秒杀活动Id: %d 缓存完成, 详细数据: %v", spike.Id, spike))
 	common.Success(c, 1, "缓存成功", nil)
 }
