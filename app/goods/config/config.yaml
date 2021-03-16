@@ -1,6 +1,6 @@
 server:
   version: v1
-  port: 9000
+  port: 8000
   read-timeout: 10                # 读取等待时间，单位: 秒
   write-timeout: 20               # 写等待时间，单位: 秒
 log:
@@ -49,6 +49,6 @@ discovery:
     panic-count: 2    # 运行挂机数，如果超过这个数，可能导致少卖，设置太大会造成redis压力大
     cache-api: /api/v1/spike/cache  # 缓存库存api地址
 kafka:
-  brokers: "192.168.1.26:9092 192.168.1.26:9093"
+  brokers: "192.168.1.26:9092 192.168.1.26:9093 192.168.1.26:9094"
 order:
   thread: 1    # 处理订单线程数

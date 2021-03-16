@@ -13,6 +13,6 @@ type Spike struct {
 }
 
 func (s *Spike) IsOnSale() bool {
-	t := time.Now().UnixNano()
+	t := time.Now().Unix()
 	return t >= s.StartTime && t < s.EndTime
 }

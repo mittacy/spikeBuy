@@ -3,10 +3,10 @@ package bootstrap
 import (
 	"buy/app/cron"
 	"buy/app/model"
-	"fmt"
 	"buy/config"
 	"buy/database"
 	"buy/logger"
+	"fmt"
 )
 
 func Init() {
