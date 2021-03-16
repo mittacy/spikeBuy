@@ -33,17 +33,18 @@ func StartOrderConsumer(groupId string) {
 		var order model.Order
 		if err = json.Unmarshal(msg.Value, &order); err != nil {
 			logger.ErrorDetail("处理Kafka订单错误", err)
-			return
+			continue
 		}
-		fmt.Println("订单: ", order)
-		// todo 实务操作: 减少秒杀活动的库存，添加订单到Mysql
+
+		// todo 事务操作: 减少秒杀活动的库存，添加订单到Mysql
 
 
 
 		if err = r.CommitMessages(ctx, msg); err != nil {
-			logger.PanicDetail("确认消费完Kafka订单消息失败", err)
+			logger.ErrorDetail("确认消费完Kafka订单消息失败", err)
 			time.Sleep(time.Minute)
 			continue
 		}
+		logger.Info(fmt.Sprintf("持久化订单成功: %v", order))
 	}
 }

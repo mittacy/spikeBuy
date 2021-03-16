@@ -46,7 +46,7 @@ func InitNacos() {
 
 func GetAllBuyInstance() []string {
 	services, err := iclient.GetService(vo.GetServiceParam{
-		ServiceName: "spikeBuy",
+		ServiceName: "spike.buy",
 		Clusters:    []string{"spike-buy"}, // 默认值DEFAULT
 		GroupName:   "spike-buy-group",             // 默认值DEFAULT_GROUP
 	})

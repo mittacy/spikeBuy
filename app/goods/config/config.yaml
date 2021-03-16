@@ -41,7 +41,7 @@ core:
 discovery:
   server:
     ip: 127.0.0.1  # nacos ip
-    port: 8848
+    port: 8850
   instance:
     name: spikeBuy
     cluster-name: spike-buy
@@ -50,5 +50,6 @@ discovery:
     cache-api: /api/v1/spike/cache  # 缓存库存api地址
 kafka:
   brokers: "192.168.1.26:9092 192.168.1.26:9093 192.168.1.26:9094"
+  topic: mysqlSpikeBuy
 order:
-  thread: 1    # 处理订单线程数
+  thread: 10    # 处理订单线程数

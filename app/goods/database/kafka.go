@@ -12,7 +12,7 @@ func NewKafkaReader(groupId string) *kafka.Reader {
 		logger.Panic("缺少kafka broker")
 	}
 
-	topic := "mysqlSpikeBuy"
+	topic := viper.GetString("kafka.topic")
 	return kafka.NewReader(kafka.ReaderConfig{
 		Brokers:  brokers,
 		GroupID:  groupId,

@@ -20,7 +20,7 @@ func InitKafka() {
 	}
 	kafkaWriter = &kafka.Writer{
 		Addr:         kafka.TCP(brokers...),
-		Topic:        "mysqlSpikeBuy",
+		Topic:        viper.GetString("kafka.topic"),
 		Async:        true,
 	}
 	logger.Info("初始化Kafka成功")

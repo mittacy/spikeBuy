@@ -7,7 +7,7 @@ type Spike struct {
 	Stock     int    `json:"stock"`
 	StartTime int64  `json:"start_time"`
 	EndTime   int64  `json:"end_time"`
-	RedisKey  string `jsno:"redis_key"`
+	RedisKey  string `json:"redis_key"`
 }
 
 func (*Spike) TableName() string {

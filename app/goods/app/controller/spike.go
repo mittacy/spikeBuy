@@ -53,15 +53,14 @@ func CreateSpike(c *gin.Context) {
 		return
 	}
 	// 1. 添加到Mysql
-	err := database.MysqlDB.Create(&goods).Error
+	err := database.MysqlDB.Omit("RedisKey").Create(&goods).Error
 	if err != nil {
 		logger.ErrorDetail("创建sms_spike错误", err)
 		return
 	}
 	// 2. 添加到Redis有序集合
 	k := viper.GetString("redis.cacheSet")
-	advance := viper.GetInt64("redis.cacheAdvanceTime")
-	cacheTime := goods.StartTime - advance * int64(time.Second)
+	cacheTime := goods.StartTime - viper.GetInt64("redis.cacheAdvanceTime")
 	_, err = database.RedisDB.Do("zadd", k, cacheTime, goods.Id)
 	if err != nil {
 		msg = "加入Redis有序集合错误"

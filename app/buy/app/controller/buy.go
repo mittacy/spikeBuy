@@ -81,6 +81,7 @@ func Buy(c *gin.Context) {
 
 	// 4. 将订单写入Kafka
 	var order model.Order
+	order.SpikeId = b.SpikeId
 	order.CreateTime = time.Now().UnixNano()
 	order.UserId = b.UserId
 	order.GoodsId = spike.GoodsId
